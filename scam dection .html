@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScamSathi AI — Detect. Understand. Verify. Protect.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0F1A;
+    --ink-soft:#151B2B;
+    --paper:#EEF3F0;
+    --paper-line:#D9E2DC;
+    --cream:#F8F7F4;
+    --indigo:#5B5FEF;
+    --indigo-soft:#E4E4FD;
+    --danger:#FF4D5E;
+    --caution:#FFB020;
+    --safe:#22C55E;
+    --white:#FFFFFF;
+    --muted:#8993AC;
+    --muted-dark:#5B6478;
+    --display: 'Sora', sans-serif;
+    --body: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    background:var(--ink);
+    color:var(--white);
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-stagger > *{ opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal-stagger.in > *{ opacity:1; transform:translateY(0); }
+  .reveal-stagger.in > *:nth-child(1){ transition-delay:0.03s; }
+  .reveal-stagger.in > *:nth-child(2){ transition-delay:0.1s; }
+  .reveal-stagger.in > *:nth-child(3){ transition-delay:0.17s; }
+  .reveal-stagger.in > *:nth-child(4){ transition-delay:0.24s; }
+  .reveal-stagger.in > *:nth-child(5){ transition-delay:0.31s; }
+  .reveal-stagger.in > *:nth-child(6){ transition-delay:0.38s; }
+  .reveal-stagger.in > *:nth-child(7){ transition-delay:0.45s; }
+  .reveal-stagger.in > *:nth-child(8){ transition-delay:0.52s; }
+  .reveal-stagger.in > *:nth-child(9){ transition-delay:0.59s; }
+  .reveal-stagger.in > *:nth-child(10){ transition-delay:0.66s; }
+
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  img{max-width:100%; display:block;}
+
+  :focus-visible{
+    outline:2px solid var(--indigo);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  h1,h2,h3,h4{
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,15,26,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--display); font-weight:700; font-size:19px;
+  }
+  .brand-mark{
+    width:30px; height:30px; border-radius:9px;
+    background:linear-gradient(135deg, var(--indigo), #8C8FFA);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .brand-mark svg{width:16px; height:16px;}
+  .nav-links{
+    display:flex; align-items:center; gap:36px;
+    font-size:14.5px; color:var(--muted);
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{
+    background:var(--white); color:var(--ink);
+    padding:10px 20px; border-radius:100px;
+    font-size:14px; font-weight:600;
+  }
+  .nav-cta:hover{background:var(--indigo-soft);}
+  .nav-mobile-hide{display:flex;}
+  @media (max-width:760px){
+    .nav-mobile-hide{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:88px 0 110px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(600px 400px at 85% 10%, rgba(91,95,239,0.20), transparent 70%),
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:auto, 42px 42px, 42px 42px;
+    mask-image:radial-gradient(closest-side, black, transparent 92%);
+    pointer-events:none;
+  }
+  .aurora-blob{
+    position:absolute; border-radius:50%;
+    filter:blur(70px);
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+  }
+  .aurora-blob.b1{
+    width:340px; height:340px; background:#5B5FEF;
+    top:-120px; right:-60px;
+    animation:driftA 16s ease-in-out infinite alternate;
+  }
+  .aurora-blob.b2{
+    width:260px; height:260px; background:#8C8FFA;
+    bottom:-100px; right:22%;
+    animation:driftB 20s ease-in-out infinite alternate;
+  }
+  @keyframes driftA{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(-40px,50px) scale(1.15); }
+  }
+  @keyframes driftB{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(30px,-30px) scale(0.9); }
+  }
+  .hero-spotlight{
+    position:absolute; inset:0; pointer-events:none; z-index:1;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(91,95,239,0.14), transparent 70%);
+    opacity:0; transition:opacity 0.3s ease;
+  }
+  .hero:hover .hero-spotlight{ opacity:1; }
+  .hero-grid, .hero .wrap{ position:relative; z-index:2; }
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:64px;
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:56px;}
+  }
+
+  .eyebrow-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12.5px; color:var(--indigo-soft);
+    background:rgba(91,95,239,0.16);
+    border:1px solid rgba(91,95,239,0.35);
+    padding:7px 14px; border-radius:100px;
+    margin-bottom:26px;
+  }
+  .eyebrow-tag .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--safe);
+    box-shadow:0 0 0 3px rgba(34,197,94,0.25);
+  }
+
+  .hero h1{
+    font-size:clamp(38px, 5.2vw, 62px);
+    line-height:1.05;
+    color:var(--white);
+    max-width:600px;
+  }
+  .hero h1 .brk{display:block;}
+  .hero p.lede{
+    margin-top:22px;
+    font-size:18px;
+    color:var(--muted);
+    max-width:460px;
+    line-height:1.6;
+  }
+  .hero-actions{
+    display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--indigo); color:var(--white);
+    padding:15px 26px; border-radius:12px;
+    font-weight:600; font-size:15.5px;
+    box-shadow:0 8px 24px rgba(91,95,239,0.35);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(91,95,239,0.45); }
+  .btn-ghost{
+    background:transparent; color:var(--white);
+    padding:15px 26px; border-radius:12px;
+    font-weight:600; font-size:15.5px;
+    border:1px solid rgba(255,255,255,0.2);
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn-ghost:hover{ border-color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); }
+
+  .hero-stats{
+    display:flex; gap:32px; margin-top:48px;
+    flex-wrap:wrap;
+  }
+  .hero-stats div{ }
+  .hero-stats .num{
+    font-family:var(--mono); font-size:24px; font-weight:600; color:var(--white);
+  }
+  .hero-stats .lbl{
+    font-size:12.5px; color:var(--muted); margin-top:2px;
+  }
+
+  /* ---------- SCAN CARD (hero visual) ---------- */
+  .scan-card{
+    background:var(--ink-soft);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    padding:22px;
+    position:relative;
+    box-shadow:0 30px 70px rgba(0,0,0,0.45);
+    transform-style:preserve-3d;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    will-change:transform;
+  }
+  .scan-card::after{
+    content:"";
+    position:absolute; inset:0; border-radius:20px;
+    padding:1px;
+    background:linear-gradient(135deg, rgba(91,95,239,0.5), transparent 40%, transparent 60%, rgba(140,143,250,0.4));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    pointer-events:none;
+  }
+  .verdict-box.risk-high.pulse{ animation:riskPulse 1.4s ease-out 2; }
+  @keyframes riskPulse{
+    0%{ box-shadow:0 0 0 0 rgba(255,77,94,0.45); }
+    100%{ box-shadow:0 0 0 16px rgba(255,77,94,0); }
+  }
+  .verdict-box.risk-safe{ background:rgba(34,197,94,0.08); border-color:rgba(34,197,94,0.3); }
+  .verdict-box.risk-safe .verdict-label, .verdict-box.risk-safe .verdict-score{ color:var(--safe); }
+  .verdict-box.risk-caution{ background:rgba(255,176,32,0.08); border-color:rgba(255,176,32,0.3); }
+  .verdict-box.risk-caution .verdict-label, .verdict-box.risk-caution .verdict-score{ color:var(--caution); }
+
+  .confetti-particle{
+    position:absolute; width:6px; height:6px; border-radius:2px;
+    background:var(--safe);
+    top:50%; left:50%;
+    opacity:1;
+    pointer-events:none;
+    animation:confettiFly 0.9s ease-out forwards;
+  }
+  @keyframes confettiFly{
+    to{ transform:translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity:0; }
+  }
+  .scan-card-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .scan-card-head .who{
+    display:flex; align-items:center; gap:10px;
+    font-size:13.5px; color:var(--muted);
+  }
+  .scan-card-head .who .avatar{
+    width:28px; height:28px; border-radius:50%;
+    background:linear-gradient(135deg,#3B4159,#232A3E);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+  }
+  .scan-card-head .live{
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    display:flex; align-items:center; gap:6px;
+  }
+  .scan-card-head .live::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--caution);
+    animation:pulse 1.4s infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  .msg-bubble{
+    background:#1C2338;
+    border-radius:14px;
+    padding:16px 18px;
+    font-size:14.5px;
+    color:#D6DBEA;
+    min-height:76px;
+    position:relative;
+    overflow:hidden;
+  }
+  .msg-bubble .cursor{
+    display:inline-block; width:2px; height:15px;
+    background:var(--indigo-soft);
+    vertical-align:middle; margin-left:2px;
+    animation:blink 0.9s infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+
+  .scan-sweep{
+    position:absolute; left:0; right:0; height:40px;
+    background:linear-gradient(180deg, transparent, rgba(91,95,239,0.28), transparent);
+    top:-40px;
+    pointer-events:none;
+  }
+  .scan-sweep.run{ animation:sweep 1.6s ease-in-out; }
+  @keyframes sweep{
+    0%{ top:-40px; }
+    100%{ top:100%; }
+  }
+
+  .tag-row{
+    display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;
+    min-height:30px;
+  }
+  .flag-tag{
+    font-family:var(--mono); font-size:11.5px;
+    padding:6px 11px; border-radius:8px;
+    background:rgba(255,176,32,0.14);
+    color:var(--caution);
+    border:1px solid rgba(255,176,32,0.3);
+    opacity:0; transform:translateY(4px);
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .flag-tag.show{ opacity:1; transform:translateY(0); }
+
+  .verdict-box{
+    margin-top:18px;
+    border-radius:14px;
+    padding:18px;
+    background:rgba(255,77,94,0.08);
+    border:1px solid rgba(255,77,94,0.28);
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity 0.4s ease, transform 0.4s ease;
+  }
+  .verdict-box.show{ opacity:1; transform:translateY(0); }
+  .verdict-top{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .verdict-label{
+    font-family:var(--mono); font-weight:600; font-size:14px; color:var(--danger);
+    letter-spacing:0.02em;
+  }
+  .verdict-score{
+    font-family:var(--mono); font-size:14px; color:var(--danger);
+  }
+  .meter-track{
+    height:6px; background:rgba(255,255,255,0.08); border-radius:100px;
+    margin-top:12px; overflow:hidden;
+  }
+  .meter-fill{
+    height:100%; width:0%; border-radius:100px;
+    background:linear-gradient(90deg, var(--caution), var(--danger));
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+  .verdict-reason{
+    margin-top:12px; font-size:13px; color:#D6DBEA; line-height:1.55;
+  }
+
+  /* ---------- LIVE ANALYZER ---------- */
+  .analyzer{
+    display:grid; grid-template-columns:1fr 1fr; gap:40px;
+    background:var(--ink-soft);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:22px;
+    padding:36px;
+  }
+  @media (max-width:860px){ .analyzer{ grid-template-columns:1fr; } }
+
+  .analyzer-tabs{ display:flex; gap:8px; margin-bottom:18px; }
+  .analyzer-tabs button{
+    padding:9px 16px; border-radius:100px; font-size:13.5px; font-weight:500;
+    background:rgba(255,255,255,0.05); color:var(--muted);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .analyzer-tabs button.active{ background:var(--indigo); color:var(--white); border-color:transparent; }
+
+  #liveTextarea{
+    width:100%; min-height:150px; resize:vertical;
+    background:#0F1524; border:1px solid rgba(255,255,255,0.12);
+    border-radius:14px; padding:16px; color:var(--white);
+    font-family:var(--body); font-size:14.5px; line-height:1.6;
+  }
+  #liveTextarea:focus{ border-color:var(--indigo); }
+  #liveTextarea::placeholder{ color:var(--muted-dark); }
+
+  .dropzone{
+    border:1.5px dashed rgba(255,255,255,0.18);
+    border-radius:14px; padding:26px; text-align:center;
+    color:var(--muted); font-size:13.5px;
+    margin-top:14px; cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .dropzone.drag{ border-color:var(--indigo); background:rgba(91,95,239,0.06); }
+  .dropzone img{ max-height:110px; margin:0 auto 10px; border-radius:8px; }
+
+  .analyze-btn{
+    margin-top:16px; width:100%;
+    background:var(--indigo); color:var(--white);
+    padding:15px; border-radius:12px; font-weight:600; font-size:15px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    box-shadow:0 8px 24px rgba(91,95,239,0.3);
+  }
+  .analyze-btn:hover{ transform:translateY(-2px); }
+  .analyze-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  .spinner{
+    width:16px; height:16px; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.35); border-top-color:#fff;
+    animation:spin 0.7s linear infinite; display:none;
+  }
+  .analyze-btn.loading .spinner{ display:inline-block; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .result-panel{
+    background:#0F1524; border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px; padding:22px; min-height:280px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .result-empty{ text-align:center; color:var(--muted-dark); font-size:14px; }
+  .result-empty .glyph{ font-size:30px; margin-bottom:10px; }
+  .result-content{ display:none; }
+  .result-content.show{ display:block; animation:fadeIn 0.4s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .result-type{
+    font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:6px;
+  }
+  .result-reasoning{ font-size:14px; color:#D6DBEA; line-height:1.6; margin:14px 0; }
+  .result-reply{
+    background:rgba(91,95,239,0.08); border:1px solid rgba(91,95,239,0.25);
+    border-radius:12px; padding:14px 16px; font-size:13.5px; color:#D6DBEA;
+    font-style:italic; line-height:1.55;
+  }
+  .result-reply-label{ font-family:var(--mono); font-size:11px; color:var(--indigo-soft); margin-bottom:8px; font-style:normal; }
+  .error-msg{ color:var(--danger); font-size:13.5px; text-align:center; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ padding:104px 0; }
+  .section.on-paper{ background:var(--paper); color:var(--ink); }
+  .section-head{
+    max-width:600px; margin-bottom:56px;
+  }
+  .section-kicker{
+    font-family:var(--mono); font-size:13px; color:var(--indigo);
+    margin-bottom:14px;
+  }
+  .on-dark .section-kicker{ color:var(--indigo-soft); }
+  .section h2{
+    font-size:clamp(28px, 3.4vw, 40px);
+    line-height:1.15;
+  }
+  .on-paper h2{ color:var(--ink); }
+  .section-head p{
+    margin-top:16px; font-size:16.5px;
+    color:var(--muted);
+    max-width:500px;
+    line-height:1.6;
+  }
+  .on-paper .section-head p{ color:var(--muted-dark); }
+
+  /* ---------- WHY / PSYCHOLOGY SECTION ---------- */
+  .why-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+  }
+  @media (max-width:860px){ .why-grid{ grid-template-columns:1fr; } }
+
+  .quote-card{
+    background:var(--white);
+    border:1px solid var(--paper-line);
+    border-radius:18px;
+    padding:28px;
+  }
+  .quote-card .msg{
+    font-size:16px; color:var(--ink); line-height:1.6;
+    padding-bottom:20px; border-bottom:1px solid var(--paper-line);
+    margin-bottom:20px;
+  }
+  .psych-row{
+    display:flex; align-items:flex-start; gap:14px;
+    padding:12px 0;
+  }
+  .psych-row + .psych-row{ border-top:1px dashed var(--paper-line); }
+  .psych-icon{
+    width:34px; height:34px; border-radius:9px;
+    background:var(--indigo-soft); color:var(--indigo);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-size:16px;
+  }
+  .psych-text b{ display:block; font-size:14.5px; color:var(--ink); margin-bottom:2px; }
+  .psych-text span{ font-size:13.5px; color:var(--muted-dark); }
+
+  .why-copy .big-line{
+    font-family:var(--display); font-weight:600; font-size:22px;
+    color:var(--ink); line-height:1.4; margin-bottom:20px;
+  }
+  .why-copy p{ color:var(--muted-dark); font-size:15.5px; line-height:1.65; margin-bottom:16px; }
+
+  /* ---------- SCAM TYPES ---------- */
+  .type-grid{
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:1px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  @media (max-width:860px){ .type-grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (min-width:861px) and (max-width:1080px){ .type-grid{ grid-template-columns:repeat(3, 1fr); } }
+
+  .type-cell{
+    background:var(--ink-soft);
+    padding:26px 20px;
+    display:flex; flex-direction:column; gap:14px;
+    transition:background 0.2s ease;
+  }
+  .type-cell:hover{ background:#1A2136; }
+  .type-cell .glyph{ font-size:22px; }
+  .type-cell b{ font-size:14px; font-weight:600; }
+  .type-cell span{ font-size:12.5px; color:var(--muted); line-height:1.4; }
+
+  /* ---------- SENIOR / MULTILINGUAL ---------- */
+  .lang-demo{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .lang-demo{ grid-template-columns:1fr; } }
+
+  .lang-toggle{
+    display:inline-flex; background:var(--white);
+    border:1px solid var(--paper-line); border-radius:100px;
+    padding:4px; gap:2px; margin-bottom:24px;
+  }
+  .lang-toggle button{
+    padding:9px 18px; border-radius:100px; font-size:14px; font-weight:500;
+    color:var(--muted-dark); background:transparent;
+  }
+  .lang-toggle button.active{ background:var(--ink); color:var(--white); }
+
+  .senior-phone{
+    background:var(--white);
+    border:1px solid var(--paper-line);
+    border-radius:26px;
+    padding:26px;
+    box-shadow:0 20px 50px rgba(20,30,40,0.08);
+    max-width:400px;
+  }
+  .senior-alert{
+    background:#FFF0F0; border:1px solid #FFD3D6;
+    border-radius:16px; padding:20px; text-align:center;
+    margin-bottom:18px;
+  }
+  .senior-alert .big{ font-size:26px; font-weight:700; color:var(--danger); font-family:var(--display); margin-bottom:6px; }
+  .senior-alert .sub{ font-size:15px; color:#8A4A50; }
+  .senior-tip{
+    background:#F0FFF4; border:1px solid #CFF3DA;
+    border-radius:16px; padding:18px; text-align:center;
+  }
+  .senior-tip .big{ font-size:19px; font-weight:600; color:#15803D; font-family:var(--display); margin-bottom:4px; }
+  .senior-tip .sub{ font-size:14px; color:#4B7A5B; }
+  .senior-controls{
+    display:flex; gap:10px; margin-top:18px;
+  }
+  .senior-controls button{
+    flex:1; padding:14px; border-radius:12px; font-size:14px; font-weight:600;
+    background:var(--paper); color:var(--ink); border:1px solid var(--paper-line);
+  }
+
+  .why-copy.on-paper-copy p{ color:var(--muted-dark); }
+
+  /* ---------- EMERGENCY MODE ---------- */
+  .emergency{
+    background:#160D0E;
+    border-top:1px solid rgba(255,77,94,0.25);
+    border-bottom:1px solid rgba(255,77,94,0.25);
+  }
+  .emergency .section-kicker{ color:var(--danger); }
+  .em-steps{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; margin-top:8px;
+  }
+  @media (max-width:860px){ .em-steps{ grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .em-steps{ grid-template-columns:1fr;} }
+  .em-step{
+    background:rgba(255,77,94,0.06);
+    border:1px solid rgba(255,77,94,0.22);
+    border-radius:16px; padding:22px;
+  }
+  .em-step .idx{
+    font-family:var(--mono); font-size:13px; color:var(--danger); margin-bottom:12px;
+  }
+  .em-step p{ font-size:14.5px; color:#E9CCCE; line-height:1.55; }
+
+  /* ---------- SCORE / DASHBOARD ---------- */
+  .score-grid{
+    display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .score-grid{ grid-template-columns:1fr; } }
+  .score-ring-wrap{
+    display:flex; flex-direction:column; align-items:center;
+    background:var(--ink-soft); border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px; padding:36px;
+  }
+  .score-ring{ position:relative; width:180px; height:180px; }
+  .score-ring svg{ transform:rotate(-90deg); }
+  .score-ring .center{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .score-ring .center .n{ font-family:var(--mono); font-size:38px; font-weight:600; }
+  .score-ring .center .l{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .score-note{ margin-top:20px; font-size:13.5px; color:var(--muted); text-align:center; }
+
+  .score-list{ display:flex; flex-direction:column; gap:14px; }
+  .score-item{
+    display:flex; align-items:center; justify-content:between; gap:14px;
+    background:var(--ink-soft); border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px; padding:16px 18px;
+  }
+  .score-item .txt{ flex:1; }
+  .score-item .txt b{ display:block; font-size:14.5px; margin-bottom:2px; }
+  .score-item .txt span{ font-size:13px; color:var(--muted); }
+  .score-item .mark{ font-size:15px; }
+  .score-item.good .mark{ color:var(--safe); }
+  .score-item.warn .mark{ color:var(--caution); }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-section{
+    padding:110px 0;
+    text-align:center;
+    position:relative;
+    background:radial-gradient(500px 300px at 50% 0%, rgba(91,95,239,0.22), transparent 70%);
+  }
+  .cta-section h2{
+    font-size:clamp(30px, 4.4vw, 48px);
+    max-width:640px; margin:0 auto 20px;
+    line-height:1.15;
+  }
+  .cta-section p{ color:var(--muted); font-size:16.5px; margin-bottom:36px; }
+  .cta-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  footer{
+    border-top:1px solid rgba(255,255,255,0.08);
+    padding:40px 0;
+  }
+  .foot-row{
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:16px;
+  }
+  .foot-row .brand{ font-size:15px; }
+  .foot-links{ display:flex; gap:26px; font-size:13.5px; color:var(--muted); flex-wrap:wrap; }
+  .foot-note{ font-size:12.5px; color:var(--muted-dark); margin-top:22px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V12C3 17 6.5 21 12 22C17.5 21 21 17 21 12V6L12 2Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12L11 14.5L16 9" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      ScamSathi AI
+    </div>
+    <div class="nav-links nav-mobile-hide">
+      <a href="#how">How it thinks</a>
+      <a href="#types">Scam types</a>
+      <a href="#senior">Senior mode</a>
+      <a href="#emergency">Emergency</a>
+    </div>
+    <a href="#try" class="nav-cta">Try a scan</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-tag"><span class="dot"></span> Live scam signals across India, right now</div>
+      <h1>Someone's trying to<span class="brk">scam you.</span><span class="brk">We catch it first.</span></h1>
+      <p class="lede">Paste a message, a screenshot, or just describe the call. ScamSathi reads it the way a scammer wants you to — then tells you exactly what they're doing to you, in your language.</p>
+      <div class="hero-actions">
+        <a href="#try" class="btn-primary">Scan a message</a>
+        <a href="#how" class="btn-ghost">See how it thinks</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">10</div><div class="lbl">scam categories tracked</div></div>
+        <div><div class="num">3</div><div class="lbl">languages, voice included</div></div>
+        <div><div class="num">&lt;2s</div><div class="lbl">to a risk verdict</div></div>
+      </div>
+    </div>
+
+    <div class="scan-card" id="try">
+      <div class="scan-card-head">
+        <div class="who"><span class="avatar">?</span> Unknown sender</div>
+        <div class="live" id="liveLabel">analyzing</div>
+      </div>
+      <div class="msg-bubble" style="position:relative;">
+        <span id="typedMsg"></span><span class="cursor" id="typeCursor"></span>
+        <div class="scan-sweep" id="sweep"></div>
+      </div>
+      <div class="tag-row" id="tagRow"></div>
+      <div class="verdict-box" id="verdictBox">
+        <div class="verdict-top">
+          <span class="verdict-label">🔴 HIGH RISK — BANK/KYC SCAM</span>
+          <span class="verdict-score" id="verdictScore">0%</span>
+        </div>
+        <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+        <div class="verdict-reason">This message manufactures urgency around your account to stop you from thinking it through. Real banks don't threaten to freeze accounts over SMS links.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="analyze">
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <div class="section-kicker">RUN A REAL SCAN</div>
+      <h2>Paste your own message. Get a real verdict.</h2>
+      <p>This calls Claude directly — paste any text message, email, or a screenshot of a chat, and get a live risk score, scam type, and a safe reply you can actually send.</p>
+    </div>
+
+    <div class="analyzer reveal">
+      <div>
+        <div class="analyzer-tabs">
+          <button class="active" data-mode="text" id="tabText">✍️ Paste text</button>
+          <button data-mode="image" id="tabImage">📸 Upload screenshot</button>
+        </div>
+
+        <div id="textInputWrap">
+          <textarea id="liveTextarea" placeholder="Paste the suspicious message here — e.g. 'Congratulations! You have won ₹50,00,000 in the KBC lottery. Send your bank details to claim your prize.'"></textarea>
+        </div>
+
+        <div id="imageInputWrap" style="display:none;">
+          <div class="dropzone" id="dropzone">
+            <div id="dropzoneContent">
+              <div style="font-size:26px; margin-bottom:8px;">📸</div>
+              Drop a screenshot here, or click to upload
+            </div>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" style="display:none;">
+        </div>
+
+        <button class="analyze-btn" id="analyzeBtn">
+          <span class="spinner"></span>
+          <span id="analyzeBtnLabel">Analyze this</span>
+        </button>
+      </div>
+
+      <div class="result-panel" id="resultPanel">
+        <div class="result-empty" id="resultEmpty">
+          <div class="glyph">🛰️</div>
+          Your verdict will appear here.
+        </div>
+        <div class="result-content" id="resultContent">
+          <div class="verdict-box" id="liveVerdictBox">
+            <div class="verdict-top">
+              <span class="verdict-label" id="liveVerdictLabel"></span>
+              <span class="verdict-score" id="liveVerdictScore"></span>
+            </div>
+            <div class="meter-track"><div class="meter-fill" id="liveMeterFill"></div></div>
+          </div>
+          <div class="result-type" id="liveScamType"></div>
+          <div class="tag-row" id="liveTagRow"></div>
+          <div class="result-reasoning" id="liveReasoning"></div>
+          <div class="result-reply">
+            <div class="result-reply-label">SUGGESTED SAFE REPLY</div>
+            <div id="liveSafeReply"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <div class="section-kicker">WHY DID I GET THIS?</div>
+      <h2>Not just "this is a scam" — here's the trick being played on you</h2>
+      <p>Every scam message is built the same way: pressure, then a way out. ScamSathi names the pressure so it stops working.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="quote-card">
+        <div class="msg">"Dear customer, your account will be BLOCKED within 24 hours due to KYC mismatch. Update immediately: bit.ly/kyc-verify-now"</div>
+        <div class="psych-row">
+          <div class="psych-icon">⏳</div>
+          <div class="psych-text"><b>Urgency</b><span>A deadline ("24 hours") removes your time to verify anything.</span></div>
+        </div>
+        <div class="psych-row">
+          <div class="psych-icon">⚠️</div>
+          <div class="psych-text"><b>Fear</b><span>"Blocked" threatens something you rely on — your own money.</span></div>
+        </div>
+        <div class="psych-row">
+          <div class="psych-icon">🏛️</div>
+          <div class="psych-text"><b>Authority impersonation</b><span>Sounds official, so you skip the "would my bank actually text this?" question.</span></div>
+        </div>
+      </div>
+      <div class="why-copy">
+        <div class="big-line">Scammers don't need you to be careless. They need you to be rushed.</div>
+        <p>Once you can name the manipulation — "oh, this is just urgency plus fear" — the message loses its grip. That's the actual defense, more than any spam filter.</p>
+        <p>ScamSathi breaks down the psychology behind every flagged message, not just the risk score, so the pattern sticks the next time too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-paper" id="types">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-kicker">SCAM TYPE CLASSIFIER</div>
+      <h2>Ten patterns cover almost everything you'll ever be sent</h2>
+      <p>ScamSathi sorts every message into a known category — because the fix for a fake job offer isn't the same as the fix for a UPI request.</p>
+    </div>
+
+    <div class="type-grid reveal-stagger">
+      <div class="type-cell"><div class="glyph">🏦</div><b>Bank / KYC</b><span>Fake "your account will be blocked" alerts</span></div>
+      <div class="type-cell"><div class="glyph">💰</div><b>UPI / Payment</b><span>Wrong "refund" requests that actually take money</span></div>
+      <div class="type-cell"><div class="glyph">🎁</div><b>Lottery / Prize</b><span>You won something you never entered</span></div>
+      <div class="type-cell"><div class="glyph">💼</div><b>Fake Job</b><span>Pay-to-work offers and fake HR recruiters</span></div>
+      <div class="type-cell"><div class="glyph">📦</div><b>Delivery</b><span>Fake courier fees before a parcel "arrives"</span></div>
+      <div class="type-cell"><div class="glyph">👮</div><b>Govt Impersonation</b><span>Fake officials threatening legal action</span></div>
+      <div class="type-cell"><div class="glyph">❤️</div><b>Romance</b><span>Manufactured relationships that ask for money</span></div>
+      <div class="type-cell"><div class="glyph">📈</div><b>Investment</b><span>Guaranteed-return schemes and fake trading apps</span></div>
+      <div class="type-cell"><div class="glyph">🔐</div><b>Login Phishing</b><span>Fake pages built to steal your password</span></div>
+      <div class="type-cell"><div class="glyph">📱</div><b>Social Media</b><span>Cloned accounts and fake giveaways</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="senior">
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <div class="section-kicker">SENIOR CITIZEN MODE</div>
+      <h2>The people scammers target most, get the clearest warning</h2>
+      <p>Large buttons, short sentences, and a spoken warning in Telugu, Hindi, or English — no jargon, no fine print.</p>
+    </div>
+
+    <div class="lang-demo">
+      <div>
+        <div class="lang-toggle" role="tablist" aria-label="Choose language">
+          <button class="active" data-lang="en">English</button>
+          <button data-lang="hi">हिंदी</button>
+          <button data-lang="te">తెలుగు</button>
+        </div>
+        <div class="why-copy why-copy-dark">
+          <p style="color:var(--muted);">One tap switches the entire warning — including the voice explanation — so a parent or grandparent never has to read English to stay safe.</p>
+          <p style="color:var(--muted);">Family Safety Mode can also forward the same alert to a son, daughter, or caretaker automatically.</p>
+        </div>
+      </div>
+
+      <div class="senior-phone">
+        <div class="senior-alert">
+          <div class="big" id="seniorHead">This may be a scam.</div>
+          <div class="sub" id="seniorSub">ఇది మోసం కావచ్చు.</div>
+        </div>
+        <div class="senior-tip">
+          <div class="big" id="seniorTipHead">Never share your OTP.</div>
+          <div class="sub" id="seniorTipSub">OTP ఎవరికీ చెప్పకండి.</div>
+        </div>
+        <div class="senior-controls">
+          <button id="voiceBtn">🔊 Play voice warning</button>
+          <button>📤 Share with family</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section emergency" id="emergency">
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <div class="section-kicker">EMERGENCY MODE</div>
+      <h2>Already sent the money? Every second still counts.</h2>
+      <p>Say "I already sent money" and ScamSathi drops everything else to walk you through recovery, in order.</p>
+    </div>
+
+    <div class="em-steps reveal-stagger">
+      <div class="em-step"><div class="idx">STEP 1</div><p>Contact your bank or payment provider immediately to flag the transaction.</p></div>
+      <div class="em-step"><div class="idx">STEP 2</div><p>Preserve every screenshot, UPI reference number, and message you received.</p></div>
+      <div class="em-step"><div class="idx">STEP 3</div><p>Report the fraud through the official cybercrime helpline or portal.</p></div>
+      <div class="em-step"><div class="idx">STEP 4</div><p>Don't send more money to anyone who says they can "recover" the first payment.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section on-paper">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-kicker">DIGITAL SAFETY SCORE</div>
+      <h2>A running picture of how well you're protected</h2>
+      <p>Every scan sharpens the score — so you can see, in plain numbers, where you're solid and where you're exposed.</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle cx="90" cy="90" r="78" fill="none" stroke="#2A3350" stroke-width="12"/>
+            <circle cx="90" cy="90" r="78" fill="none" stroke="#5B5FEF" stroke-width="12"
+              stroke-dasharray="490" stroke-dashoffset="108" stroke-linecap="round"/>
+          </svg>
+          <div class="center"><div class="n">78</div><div class="l">/ 100</div></div>
+        </div>
+        <div class="score-note">Your Digital Safety Score, updated after every scan</div>
+      </div>
+
+      <div class="score-list">
+        <div class="score-item good"><span class="mark">✓</span><div class="txt"><b>You don't share OTPs</b><span>Zero OTP-sharing incidents across your scan history</span></div></div>
+        <div class="score-item good"><span class="mark">✓</span><div class="txt"><b>You verify payment requests</b><span>You've flagged 6 pressure-payment attempts before sending</span></div></div>
+        <div class="score-item warn"><span class="mark">⚠</span><div class="txt"><b>Be careful with unknown links</b><span>3 unshortened suspicious links opened this month</span></div></div>
+        <div class="score-item warn"><span class="mark">⚠</span><div class="txt"><b>Verify job offers independently</b><span>2 pay-to-work messages weren't cross-checked before replying</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2>The next message lands in your inbox tonight. Be ready for it.</h2>
+    <p>Free to try. No account needed for a single scan.</p>
+    <div class="cta-actions">
+      <a href="#try" class="btn-primary">Scan a message now</a>
+      <a href="#senior" class="btn-ghost">Set up Senior Mode</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="brand">
+        <span class="brand-mark" style="width:24px;height:24px;">
+          <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M12 2L3 6V12C3 17 6.5 21 12 22C17.5 21 21 17 21 12V6L12 2Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12L11 14.5L16 9" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        ScamSathi AI
+      </div>
+      <div class="foot-links">
+        <a href="#how">How it thinks</a>
+        <a href="#types">Scam types</a>
+        <a href="#senior">Senior mode</a>
+        <a href="#emergency">Emergency</a>
+      </div>
+    </div>
+    <div class="foot-note">Detect → Understand → Verify → Protect. ScamSathi AI is a safety companion, not a substitute for your bank's official verification process.</div>
+  </div>
+</footer>
+
+<script>
+  // Hero scan sequence
+  const sampleMsg = "Dear customer, your account will be BLOCKED within 24 hours due to KYC mismatch. Update immediately: bit.ly/kyc-verify-now";
+  const typedEl = document.getElementById('typedMsg');
+  const cursorEl = document.getElementById('typeCursor');
+  const sweepEl = document.getElementById('sweep');
+  const tagRow = document.getElementById('tagRow');
+  const verdictBox = document.getElementById('verdictBox');
+  const meterFill = document.getElementById('meterFill');
+  const verdictScore = document.getElementById('verdictScore');
+  const liveLabel = document.getElementById('liveLabel');
+
+  const tags = ['⏳ Urgency', '⚠️ Fear', '🏛️ Authority impersonation', '🔗 Suspicious link'];
+
+  let hasRun = false;
+  function runScanSequence(){
+    if (hasRun) return;
+    hasRun = true;
+    let i = 0;
+    liveLabel.textContent = 'reading message';
+    const typeInterval = setInterval(() => {
+      typedEl.textContent = sampleMsg.slice(0, i);
+      i++;
+      if (i > sampleMsg.length){
+        clearInterval(typeInterval);
+        cursorEl.style.display = 'none';
+        liveLabel.textContent = 'scanning';
+        sweepEl.classList.add('run');
+        setTimeout(() => {
+          tags.forEach((t, idx) => {
+            setTimeout(() => {
+              const el = document.createElement('span');
+              el.className = 'flag-tag';
+              el.textContent = t;
+              tagRow.appendChild(el);
+              requestAnimationFrame(() => el.classList.add('show'));
+            }, idx * 220);
+          });
+        }, 500);
+        setTimeout(() => {
+          liveLabel.textContent = 'verdict ready';
+          verdictBox.classList.add('show');
+          requestAnimationFrame(() => {
+            meterFill.style.width = '92%';
+          });
+          let score = 0;
+          const scoreInterval = setInterval(() => {
+            score += 4;
+            if (score >= 92){ score = 92; clearInterval(scoreInterval); }
+            verdictScore.textContent = score + '%';
+          }, 40);
+        }, 1700);
+      }
+    }, 24);
+  }
+
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){ runScanSequence(); }
+    });
+  }, { threshold: 0.4 });
+  heroObserver.observe(document.querySelector('.scan-card'));
+
+  // Senior mode language toggle
+  const langCopy = {
+    en: { head: "This may be a scam.", sub: "Stay calm and don't act yet.", tipHead: "Never share your OTP.", tipSub: "Not with anyone who calls or texts you." },
+    hi: { head: "यह धोखाधड़ी हो सकती है।", sub: "घबराएं नहीं, अभी कोई कार्रवाई न करें।", tipHead: "अपना OTP किसी को न बताएं।", tipSub: "फोन या मैसेज करने वाले किसी को भी नहीं।" },
+    te: { head: "ఇది మోసం కావచ్చు.", sub: "కంగారు పడకండి, ఇప్పుడే ఏమీ చేయకండి.", tipHead: "OTP ఎవరికీ చెప్పకండి.", tipSub: "కాల్ చేసిన లేదా మెసేజ్ చేసిన వారికి కూడా వద్దు." }
+  };
+  const seniorHead = document.getElementById('seniorHead');
+  const seniorSub = document.getElementById('seniorSub');
+  const seniorTipHead = document.getElementById('seniorTipHead');
+  const seniorTipSub = document.getElementById('seniorTipSub');
+
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const lang = langCopy[btn.dataset.lang];
+      seniorHead.textContent = lang.head;
+      seniorSub.textContent = lang.sub;
+      seniorTipHead.textContent = lang.tipHead;
+      seniorTipSub.textContent = lang.tipSub;
+    });
+  });
+
+  document.getElementById('voiceBtn').addEventListener('click', () => {
+    const text = seniorHead.textContent + '. ' + seniorTipHead.textContent;
+    const activeLang = document.querySelector('.lang-toggle button.active').dataset.lang;
+    const langMap = { en: 'en-IN', hi: 'hi-IN', te: 'te-IN' };
+    if ('speechSynthesis' in window){
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = langMap[activeLang] || 'en-IN';
+      window.speechSynthesis.speak(utter);
+    }
+  });
+
+  // ---------- SCROLL REVEAL ----------
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+
+  // ---------- COUNT-UP HERO STATS ----------
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.querySelectorAll('.num').forEach(numEl => {
+          const raw = numEl.textContent.trim();
+          const match = raw.match(/^(\D*)(\d+)(.*)$/);
+          if (!match) return;
+          const [, prefix, digits, suffix] = match;
+          const target = parseInt(digits, 10);
+          let cur = 0;
+          const step = Math.max(1, Math.ceil(target / 24));
+          const timer = setInterval(() => {
+            cur += step;
+            if (cur >= target){ cur = target; clearInterval(timer); }
+            numEl.textContent = prefix + cur + suffix;
+          }, 30);
+        });
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  const heroStatsEl = document.querySelector('.hero-stats');
+  if (heroStatsEl) statObserver.observe(heroStatsEl);
+
+  // ---------- HERO SPOTLIGHT + CARD TILT ----------
+  const heroEl = document.querySelector('.hero');
+  const spotlightEl = document.querySelector('.hero-spotlight');
+  const scanCardEl = document.querySelector('.scan-card');
+  if (heroEl && window.matchMedia('(hover:hover)').matches){
+    heroEl.addEventListener('mousemove', (e) => {
+      const rect = heroEl.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      if (spotlightEl){
+        spotlightEl.style.setProperty('--mx', x + 'px');
+        spotlightEl.style.setProperty('--my', y + 'px');
+      }
+      if (scanCardEl){
+        const cr = scanCardEl.getBoundingClientRect();
+        const cx = e.clientX - cr.left, cy = e.clientY - cr.top;
+        const rx = ((cy / cr.height) - 0.5) * -8;
+        const ry = ((cx / cr.width) - 0.5) * 8;
+        scanCardEl.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      }
+    });
+    heroEl.addEventListener('mouseleave', () => {
+      if (scanCardEl) scanCardEl.style.transform = 'perspective(900px) rotateX(0) rotateY(0)';
+    });
+  }
+
+  // ---------- CONFETTI BURST (safe verdicts) ----------
+  function burstConfetti(container){
+    const colors = ['#22C55E', '#5B5FEF', '#8C8FFA'];
+    for (let i = 0; i < 18; i++){
+      const p = document.createElement('span');
+      p.className = 'confetti-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 70;
+      p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+      p.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+      p.style.background = colors[i % colors.length];
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 950);
+    }
+  }
+
+  // ---------- LIVE ANALYZER (real backend call) ----------
+  const tabText = document.getElementById('tabText');
+  const tabImage = document.getElementById('tabImage');
+  const textInputWrap = document.getElementById('textInputWrap');
+  const imageInputWrap = document.getElementById('imageInputWrap');
+  const liveTextarea = document.getElementById('liveTextarea');
+  const dropzone = document.getElementById('dropzone');
+  const dropzoneContent = document.getElementById('dropzoneContent');
+  const fileInput = document.getElementById('fileInput');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  const analyzeBtnLabel = document.getElementById('analyzeBtnLabel');
+  const resultEmpty = document.getElementById('resultEmpty');
+  const resultContent = document.getElementById('resultContent');
+
+  let mode = 'text';
+  let uploadedImage = null; // { base64, mediaType }
+
+  tabText.addEventListener('click', () => {
+    mode = 'text'; tabText.classList.add('active'); tabImage.classList.remove('active');
+    textInputWrap.style.display = 'block'; imageInputWrap.style.display = 'none';
+  });
+  tabImage.addEventListener('click', () => {
+    mode = 'image'; tabImage.classList.add('active'); tabText.classList.remove('active');
+    textInputWrap.style.display = 'none'; imageInputWrap.style.display = 'block';
+  });
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault(); dropzone.classList.remove('drag');
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file){
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result.split(',')[1];
+      uploadedImage = { base64, mediaType: file.type || 'image/png' };
+      dropzoneContent.innerHTML = `<img src="${reader.result}" alt="Uploaded screenshot preview"><div>${file.name}</div>`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  analyzeBtn.addEventListener('click', runLiveAnalysis);
+
+  async function runLiveAnalysis(){
+    const text = liveTextarea.value.trim();
+    if (mode === 'text' && !text){
+      liveTextarea.focus();
+      return;
+    }
+    if (mode === 'image' && !uploadedImage){
+      dropzone.focus();
+      return;
+    }
+
+    analyzeBtn.disabled = true;
+    analyzeBtn.classList.add('loading');
+    analyzeBtnLabel.textContent = 'Analyzing…';
+    resultEmpty.style.display = 'none';
+    resultContent.classList.remove('show');
+
+    const systemPrompt = `You are ScamSathi AI, a scam-detection assistant for users in India. Analyze the given message (text or screenshot) and respond ONLY with a single JSON object, no preamble, no markdown fences, matching exactly this shape:
+{
+  "risk_score": <integer 0-100>,
+  "risk_level": "safe" | "caution" | "high",
+  "scam_type": "<short label like 'Bank/KYC Scam', 'UPI/Payment Scam', 'Lottery/Prize Scam', 'Fake Job Scam', 'Delivery Scam', 'Government Impersonation', 'Romance Scam', 'Investment Scam', 'Account/Login Phishing', 'Social Media Scam', or 'No scam detected'>",
+  "manipulation_tags": ["<short tag like 'Urgency', 'Fear', 'Authority impersonation', 'Too-good-to-be-true reward'>", ...],
+  "reasoning": "<2-3 sentences explaining the verdict in plain, simple language>",
+  "safe_reply": "<a short safe response the user could send, or safety advice if no reply is appropriate>"
+}
+If the message looks completely legitimate, set risk_level to "safe" and risk_score low, and say so plainly.`;
+
+    let userContent;
+    if (mode === 'text'){
+      userContent = [{ type: 'text', text: `Analyze this message:\n\n"${text}"` }];
+    } else {
+      userContent = [
+        { type: 'image', source: { type: 'base64', media_type: uploadedImage.mediaType, data: uploadedImage.base64 } },
+        { type: 'text', text: 'This is a screenshot of a message someone received. Read the text in the image and analyze it for scam indicators.' }
+      ];
+    }
+
+    try{
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userContent }]
+        })
+      });
+      const data = await response.json();
+      const textBlock = (data.content || []).map(b => b.text || '').join('\n');
+      const cleaned = textBlock.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(cleaned);
+      renderLiveResult(parsed);
+    } catch(err){
+      resultContent.innerHTML = '<div class="error-msg">Could not complete the scan right now. Please try again in a moment.</div>';
+      resultContent.classList.add('show');
+    } finally {
+      analyzeBtn.disabled = false;
+      analyzeBtn.classList.remove('loading');
+      analyzeBtnLabel.textContent = 'Analyze this';
+    }
+  }
+
+  function renderLiveResult(parsed){
+    // rebuild result-content in case a previous error overwrote it
+    if (!document.getElementById('liveVerdictBox')){
+      resultContent.innerHTML = `
+        <div class="verdict-box" id="liveVerdictBox">
+          <div class="verdict-top">
+            <span class="verdict-label" id="liveVerdictLabel"></span>
+            <span class="verdict-score" id="liveVerdictScore"></span>
+          </div>
+          <div class="meter-track"><div class="meter-fill" id="liveMeterFill"></div></div>
+        </div>
+        <div class="result-type" id="liveScamType"></div>
+        <div class="tag-row" id="liveTagRow"></div>
+        <div class="result-reasoning" id="liveReasoning"></div>
+        <div class="result-reply">
+          <div class="result-reply-label">SUGGESTED SAFE REPLY</div>
+          <div id="liveSafeReply"></div>
+        </div>`;
+    }
+    const box = document.getElementById('liveVerdictBox');
+    const label = document.getElementById('liveVerdictLabel');
+    const score = document.getElementById('liveVerdictScore');
+    const meter = document.getElementById('liveMeterFill');
+    const scamType = document.getElementById('liveScamType');
+    const tagRow = document.getElementById('liveTagRow');
+    const reasoning = document.getElementById('liveReasoning');
+    const safeReply = document.getElementById('liveSafeReply');
+
+    const level = parsed.risk_level || 'caution';
+    const icon = level === 'high' ? '🔴' : level === 'safe' ? '🟢' : '🟡';
+    const levelText = level === 'high' ? 'HIGH RISK' : level === 'safe' ? 'LOOKS SAFE' : 'SUSPICIOUS';
+
+    box.classList.remove('risk-high', 'risk-safe', 'risk-caution', 'pulse');
+    box.classList.add('risk-' + (level === 'high' ? 'high' : level === 'safe' ? 'safe' : 'caution'));
+
+    label.textContent = `${icon} ${levelText}`;
+    score.textContent = (parsed.risk_score ?? 0) + '%';
+    scamType.textContent = 'CATEGORY: ' + (parsed.scam_type || 'Unclassified');
+    reasoning.textContent = parsed.reasoning || '';
+    safeReply.textContent = parsed.safe_reply || '';
+
+    tagRow.innerHTML = '';
+    (parsed.manipulation_tags || []).forEach((t, idx) => {
+      const el = document.createElement('span');
+      el.className = 'flag-tag';
+      el.textContent = t;
+      tagRow.appendChild(el);
+      setTimeout(() => el.classList.add('show'), idx * 120);
+    });
+
+    meter.style.width = '0%';
+    resultContent.classList.add('show');
+    requestAnimationFrame(() => {
+      meter.style.width = (parsed.risk_score ?? 0) + '%';
+    });
+
+    if (level === 'high'){
+      setTimeout(() => box.classList.add('pulse'), 200);
+    } else if (level === 'safe'){
+      setTimeout(() => burstConfetti(box), 200);
+    }
+  }
+</script>
+
+</body>
+</html>
